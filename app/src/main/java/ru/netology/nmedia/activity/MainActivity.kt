@@ -2,6 +2,7 @@ package ru.netology.nmedia.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -13,19 +14,15 @@ import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
+import androidx.core.net.toUri
 
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: PostViewModel by viewModels()
-    private val newPostLauncher = registerForActivityResult(NewPostResultContract) { content ->
-        content ?: return@registerForActivityResult
-        viewModel.save(content.toString())
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
@@ -34,22 +31,21 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        //val intent = Intent(this, PostEdit::class.java)
-        //val intent = Intent(Intent(Intent.ACTION_VIEW,
-        //"https://www.youtube.com/watch?v=WhWc3b3KhnY".toUri()))
-        //startActivity(intent)
+        val viewModel: PostViewModel by viewModels()
+
+        val newPostLauncher = registerForActivityResult(NewPostResultContract) { result ->
+            result ?: return@registerForActivityResult
+            viewModel.save(result)
+        }
+
 
         val adapter = PostsAdapter(object : OnInteractionListener {
 
             override fun onEdit(post: Post) {
-                post.content.let { content ->
-                    newPostLauncher.launch(content)
-                }
+                val content = post.content
+                newPostLauncher.launch(content)
                 viewModel.edit(post)
 
-                //editPostLauncher.launch(post.content)
-                //startActivity(intent)
-                //intent.putExtra(Intent.EXTRA_TEXT, post.content)
             }
 
             override fun onLike(post: Post) {
@@ -71,20 +67,33 @@ class MainActivity : AppCompatActivity() {
                         Intent.createChooser(intent, getString(R.string.chooser_share_post))
                     startActivity(shareIntent)
                 }
+
+
+            }
+
+            override fun onPlayVideo(post: Post) { // Работа с видео
+                val intent = Intent(Intent.ACTION_VIEW, post.videoUrl.toUri())
+                if (intent.resolveActivity(packageManager) != null) {
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Нет приложений для просмотра видео",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
 
         })
 
         binding.list.adapter = adapter
-
         viewModel.data.observe(this) { posts ->
             adapter.submitList(posts)
         }
 
         binding.fab.setOnClickListener {
-            newPostLauncher.launch(null.toString())
+            newPostLauncher.launch("")
         }
 
     }
-
 }

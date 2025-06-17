@@ -22,6 +22,7 @@ interface OnInteractionListener {
     fun canselEdit(post: Post) {}
     fun onRemove(post: Post) {}
     fun onShare(post: Post) {}
+    fun onPlayVideo(post: Post) {}
 }
 
 class PostsAdapter(
@@ -89,27 +90,16 @@ class PostViewHolder(
             // Работа с видео
             if (!post.videoUrl.isNullOrBlank()) {
                 video.visibility = View.VISIBLE
-
-                val clickListener = View.OnClickListener {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoUrl))
-                    if (intent.resolveActivity(root.context.packageManager) != null) {
-                        root.context.startActivity(intent)
-                    } else {
-                        Toast.makeText(
-                            root.context,
-                            "Нет приложений для просмотра видео",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+                video.setOnClickListener {
+                    onInteractionListener.onPlayVideo(post)
                 }
-
-                video.setOnClickListener(clickListener)
             } else {
                 video.visibility = View.GONE
+                video.setOnClickListener(null)
             }
+
         }
     }
-
 }
 
 
