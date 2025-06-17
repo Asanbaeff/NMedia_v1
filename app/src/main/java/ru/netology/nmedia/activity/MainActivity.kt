@@ -33,9 +33,18 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel: PostViewModel by viewModels()
 
+//        val newPostLauncher = registerForActivityResult(NewPostResultContract) { result ->
+//            result ?: return@registerForActivityResult
+//            viewModel.save(result)
+//        }
+
+
         val newPostLauncher = registerForActivityResult(NewPostResultContract) { result ->
-            result ?: return@registerForActivityResult
-            viewModel.save(result)
+            if (result == null) {
+                viewModel.cancelEdit()
+            } else {
+                viewModel.save(result)
+            }
         }
 
 
@@ -73,15 +82,14 @@ class MainActivity : AppCompatActivity() {
 
             override fun onPlayVideo(post: Post) { // Работа с видео
                 val intent = Intent(Intent.ACTION_VIEW, post.videoUrl.toUri())
-                if (intent.resolveActivity(packageManager) != null) {
-                    startActivity(intent)
-                } else {
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Нет приложений для просмотра видео",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                //if (intent.resolveActivity(packageManager) != null) {
+                startActivity(intent)
+                //} else {
+                // Toast.makeText(
+                // this@MainActivity,
+                // Toast.LENGTH_SHORT
+                // ).show()
+                // }
             }
 
         })

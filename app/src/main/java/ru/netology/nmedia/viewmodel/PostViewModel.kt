@@ -23,12 +23,12 @@ private val empty = Post(
     videoUrl = ""
 )
 
-class PostViewModel(application: Application) : AndroidViewModel(application) {
+//class PostViewModel(application: Application) : AndroidViewModel(application) {
 //   private val repository: PostRepository = PostRepositorySharedPrefImpl(application) //для "repo"
-   private val repository: PostRepository = PostRepositoryFileImpl(application) //для "posts.json"
+  // private val repository: PostRepository = PostRepositoryFileImpl(application) //для "posts.json"
 
-//class PostViewModel : ViewModel() {
-    //private val repository: PostRepository = PostRepositoryInMemoryImpl()
+class PostViewModel : ViewModel() {
+    private val repository: PostRepository = PostRepositoryInMemoryImpl()
     val data = repository.getAll()
     val edited = MutableLiveData(empty)
 
