@@ -14,7 +14,7 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
             ${PostColumns.COLUMN_CONTENT} TEXT NOT NULL,
             ${PostColumns.COLUMN_PUBLISHED} TEXT NOT NULL,
             ${PostColumns.COLUMN_LIKED_BY_ME} BOOLEAN NOT NULL DEFAULT 0,
-            ${PostColumns.COLUMN_LIKES} INTEGER NOT NULL DEFAULT 0,            
+            ${PostColumns.COLUMN_LIKES} INTEGER NOT NULL DEFAULT 0
         );
         """.trimIndent()
     }
@@ -27,16 +27,13 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
         const val COLUMN_PUBLISHED = "published"
         const val COLUMN_LIKED_BY_ME = "likedByMe"
         const val COLUMN_LIKES = "likes"
-        //const val COLUMN_SHARE = "share"  //${PostColumns.COLUMN_SHARE} TEXT NOT NULL,
-
         val ALL_COLUMNS = arrayOf(
             COLUMN_ID,
             COLUMN_AUTHOR,
             COLUMN_CONTENT,
             COLUMN_PUBLISHED,
             COLUMN_LIKED_BY_ME,
-            COLUMN_LIKES,
-            //COLUMN_SHARE
+            COLUMN_LIKES
         )
     }
 
@@ -110,11 +107,6 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
     }
 
     override fun shareById(id: Long) {
-        db.delete(
-            PostColumns.TABLE,
-            "${PostColumns.COLUMN_ID} = ?",
-            arrayOf(id.toString())
-        )
     }
 
     private fun map(cursor: Cursor): Post {
@@ -126,8 +118,8 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
                 published = getString(getColumnIndexOrThrow(PostColumns.COLUMN_PUBLISHED)),
                 likedByMe = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_LIKED_BY_ME)) != 0,
                 likes = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_LIKES)),
+                shareById = 0,
                 videoUrl = "",
-                shareById = 0
             )
         }
     }

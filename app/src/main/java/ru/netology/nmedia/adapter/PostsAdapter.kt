@@ -76,7 +76,7 @@ class PostViewHolder(
                 onInteractionListener.onShare(post)
             }
 
-            if (!post.videoUrl.isNullOrBlank()) {
+            if (post.videoUrl.isNotBlank()) {
                 video.visibility = View.VISIBLE
                 video.setOnClickListener {
                     onInteractionListener.onPlayVideo(post)

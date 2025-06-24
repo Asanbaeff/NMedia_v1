@@ -34,10 +34,7 @@ class EditPostFragment : Fragment() {
             false
         )
 
-        binding.buttonSave.setOnClickListener {
-            binding.textEdit.text.toString()
-        }
-
+        binding.textEdit.text.toString()
         arguments?.textArg?.let(binding.textEdit::setText)
 
         binding.buttonSave.setOnClickListener {
@@ -48,4 +45,5 @@ class EditPostFragment : Fragment() {
         }
         return binding.root
     }
+
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -35,6 +36,9 @@ class FeedFragment : Fragment() {
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
+                findNavController().navigate(
+                    R.id.action_feedFragment_to_editPostFragment2, bundleOf("textArg" to post.content)
+                )
             }
 
             override fun onLike(post: Post) {
@@ -44,6 +48,8 @@ class FeedFragment : Fragment() {
             override fun onRemove(post: Post) {
                 viewModel.removeById(post.id)
             }
+
+
 
             override fun onShare(post: Post) {
                 val intent = Intent().apply {

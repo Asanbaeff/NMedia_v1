@@ -31,7 +31,7 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
             )
 
             findNavController(R.id.nav_host_fragment).navigate(
-                R.id.action_feedFragment2_to_editPostFragment,
+                R.id.action_feedFragment_to_editPostFragment2,
                 Bundle().apply {
                     textArg = text
                 }
