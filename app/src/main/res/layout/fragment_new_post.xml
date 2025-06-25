@@ -2,17 +2,19 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_edit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.NewPostFragment">
+    tools:context=".activity.NewPostFragment"
+    android:fitsSystemWindows="true">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/edit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/transparent"
         android:gravity="start|top"
-        android:inputType="textMultiLine"
-        android:background="@android:color/transparent"/>
+        android:inputType="textMultiLine" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"

@@ -5,12 +5,11 @@ data class Post(
     val author: String,
     val content: String,
     val published: String,
-    var likes: Int = 0,
-    var shares: Int = 0,
-    var views: Int = 0,
     val likedByMe: Boolean = false,
+    var likes: Int = 0,
+    val shareById: Int,
     var videoUrl: String,
-    val shareById: Int
+    var views: Int = 0,
 )
 
 

@@ -49,7 +49,13 @@ class PostRepositorySQLiteImpl(
     }
 
     override fun shareById(id: Long) {
-        TODO("Not yet implemented")
+        dao.shareById(id)
+        posts = posts.map {
+            if (it.id != id) it else it.copy(
+                shareById = it.shareById + 1
+            )
+        }
+        data.value = posts
     }
 
 

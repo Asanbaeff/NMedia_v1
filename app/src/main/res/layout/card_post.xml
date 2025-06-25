@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
     android:padding="@dimen/common_spacing">
 
     <ImageView
@@ -87,9 +88,10 @@
         style="@style/Widget.AppTheme.LikeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:checkable="true"
         android:contentDescription="@string/description_post_like"
+        android:textSize="16sp"
         app:icon="@drawable/ic_like"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/footer"
@@ -104,10 +106,10 @@
         android:layout_marginTop="8dp"
         android:checkable="false"
         android:contentDescription="@string/description_post_share"
+        android:textSize="16sp"
         app:icon="@drawable/ic_share_24"
         app:layout_constraintStart_toEndOf="@+id/like"
-        app:layout_constraintTop_toBottomOf="@id/footer"
-        tools:text="33" />
+        app:layout_constraintTop_toBottomOf="@id/footer" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/video"
@@ -118,6 +120,7 @@
         android:layout_marginTop="8dp"
         android:checkable="false"
         android:text="@string/youtube"
+        android:textSize="16sp"
         android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/share"
         app:layout_constraintTop_toBottomOf="@id/footer" />

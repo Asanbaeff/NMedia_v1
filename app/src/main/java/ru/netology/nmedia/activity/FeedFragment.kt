@@ -56,6 +56,7 @@ class FeedFragment : Fragment() {
                     action = Intent.ACTION_SEND
                     putExtra(Intent.EXTRA_TEXT, post.content)
                     type = "text/plain"
+                    viewModel.shareById(post.id)
                 }
 
                 val shareIntent =
