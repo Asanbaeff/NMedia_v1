@@ -33,5 +33,13 @@
         android:id="@+id/editPostFragment"
         android:name="ru.netology.nmedia.activity.EditPostFragment"
         android:label="fragment_edit_post"
-        tools:layout="@layout/fragment_edit_post" />
+        tools:layout="@layout/fragment_edit_post">
+        <action
+            android:id="@+id/action_editPostFragment_to_post"
+            app:destination="@id/post" />
+    </fragment>
+    <fragment
+        android:id="@+id/post"
+        android:name="ru.netology.nmedia.activity.PostFragment"
+        tools:layout="@layout/fragment_single_post"/>
 </navigation>

@@ -18,6 +18,7 @@ interface OnInteractionListener {
     fun onRemove(post: Post) {}
     fun onShare(post: Post) {}
     fun onPlayVideo(post: Post) {}
+    fun onPostClick(post: Post) {}
 }
 
 class PostsAdapter(
@@ -46,6 +47,7 @@ class PostViewHolder(
             content.text = post.content
             like.isChecked = post.likedByMe
             like.text = "${post.likes}"
+            share.text = "${post.shareById}"
 
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
@@ -67,6 +69,9 @@ class PostViewHolder(
                     }
                 }.show()
             }
+            root.setOnClickListener {
+                onInteractionListener.onPostClick(post)
+            }
 
             like.setOnClickListener {
                 onInteractionListener.onLike(post)
@@ -82,8 +87,7 @@ class PostViewHolder(
                     onInteractionListener.onPlayVideo(post)
                 }
             } else {
-                //video.visibility = View.GONE
-                video.visibility = View.VISIBLE
+                video.visibility = View.GONE
                 video.setOnClickListener(null)
             }
 

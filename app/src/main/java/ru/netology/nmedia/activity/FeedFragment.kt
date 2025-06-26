@@ -13,6 +13,7 @@ import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.FragmentFeedBinding
+import ru.netology.nmedia.databinding.FragmentSinglePostBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
 
@@ -37,7 +38,8 @@ class FeedFragment : Fragment() {
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
                 findNavController().navigate(
-                    R.id.action_feedFragment_to_editPostFragment2, bundleOf("textArg" to post.content)
+                    R.id.action_feedFragment_to_editPostFragment2,
+                    bundleOf("textArg" to post.content)
                 )
             }
 
@@ -49,6 +51,11 @@ class FeedFragment : Fragment() {
                 viewModel.removeById(post.id)
             }
 
+            override fun onPostClick(post: Post) {
+                findNavController().navigate(
+                    R.id.action_editPostFragment_to_post, bundleOf("textArg" to post.content)
+                )
+            }
 
 
             override fun onShare(post: Post) {
