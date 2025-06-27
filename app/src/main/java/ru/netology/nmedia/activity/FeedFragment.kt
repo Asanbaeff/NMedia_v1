@@ -18,7 +18,6 @@ import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 class FeedFragment : Fragment() {
-
     private val viewModel: PostViewModel by viewModels(
         ownerProducer = ::requireParentFragment
     )
@@ -29,8 +28,7 @@ class FeedFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentFeedBinding.inflate(
-            inflater,
-            container,
+            inflater, container,
             false
         )
 
@@ -53,7 +51,7 @@ class FeedFragment : Fragment() {
 
             override fun onPostClick(post: Post) {
                 findNavController().navigate(
-                    R.id.action_editPostFragment_to_post, bundleOf("textArg" to post.content)
+                    R.id.action_feedFragment_to_post, bundleOf("textArg" to post.content)
                 )
             }
 

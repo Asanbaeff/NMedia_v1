@@ -33,6 +33,7 @@ class NewPostFragment : Fragment() {
             false
         )
 
+
         arguments?.textArg?.let(binding.edit::setText)
 
         binding.ok.setOnClickListener {
