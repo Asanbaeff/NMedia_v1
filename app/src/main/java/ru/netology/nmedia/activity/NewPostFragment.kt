@@ -36,6 +36,7 @@ class NewPostFragment : Fragment() {
 
         arguments?.textArg?.let(binding.edit::setText)
 
+        binding.edit.requestFocus()
         binding.ok.setOnClickListener {
             viewModel.changeContent(binding.edit.text.toString())
             viewModel.save()

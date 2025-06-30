@@ -13,8 +13,10 @@ import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.FragmentFeedBinding
-import ru.netology.nmedia.databinding.FragmentSinglePostBinding
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.util.StringArg
+import ru.netology.nmedia.util.StringArg.getValue
+import ru.netology.nmedia.util.StringArg.setValue
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 class FeedFragment : Fragment() {
@@ -28,9 +30,11 @@ class FeedFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentFeedBinding.inflate(
-            inflater, container,
+            inflater,
+            container,
             false
         )
+        val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
 
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onEdit(post: Post) {
@@ -79,5 +83,9 @@ class FeedFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    companion object {
+        var Bundle.textArg: String? by StringArg
     }
 }
