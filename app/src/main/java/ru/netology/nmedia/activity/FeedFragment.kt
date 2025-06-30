@@ -15,14 +15,13 @@ import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.FragmentFeedBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.util.StringArg
-import ru.netology.nmedia.util.StringArg.getValue
-import ru.netology.nmedia.util.StringArg.setValue
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 class FeedFragment : Fragment() {
-    private val viewModel: PostViewModel by viewModels(
-        ownerProducer = ::requireParentFragment
-    )
+
+    companion object {
+        var Bundle.textArg: String? by StringArg
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,9 +29,7 @@ class FeedFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentFeedBinding.inflate(
-            inflater,
-            container,
-            false
+            inflater, container, false
         )
         val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
 
@@ -59,7 +56,6 @@ class FeedFragment : Fragment() {
                 )
             }
 
-
             override fun onShare(post: Post) {
                 val intent = Intent().apply {
                     action = Intent.ACTION_SEND
@@ -85,7 +81,4 @@ class FeedFragment : Fragment() {
         return binding.root
     }
 
-    companion object {
-        var Bundle.textArg: String? by StringArg
-    }
 }

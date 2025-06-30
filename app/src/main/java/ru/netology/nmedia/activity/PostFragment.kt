@@ -4,58 +4,81 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.FragmentSinglePostBinding
+import ru.netology.nmedia.util.StringArg
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 class PostFragment : Fragment() {
 
-    private val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
-
+    companion object {
+        var Bundle.textArg: String? by StringArg
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentSinglePostBinding.inflate(inflater, container, false)
-        val content = arguments?.getString("textArg")
+        val binding = FragmentSinglePostBinding.inflate(
+            inflater, container, false
+        )
+        val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
 
 
-        binding.post.content.text = content
-        binding.post.like.text = "like"
-        binding.post.author.text = "author"
-        binding.post.published.text = "published"
-        binding.post.share.text = "shares"
+        val postId = arguments?.getLong("postId")
 
-        binding.post.like.setOnClickListener {
-            binding.post.like.text = "99"
-        }
-        binding.post.share.setOnClickListener {
-            binding.post.share.text = "Sh"
-        }
-        //binding.post.video.setOnClickListener {}
+        viewModel.data.observe(viewLifecycleOwner) { posts ->
+            val post = posts.find { it.id == postId } ?: return@observe
 
-        binding.post.menu.setOnClickListener {
-            PopupMenu(it.context, it).apply {
-                inflate(R.menu.options_post)
-                setOnMenuItemClickListener { item ->
-                    when (item.itemId) {
-                        R.id.remove -> {
-                            binding.post.content.text = "remove"
-                            true
+            binding.post.like.setOnClickListener {
+                viewModel.likeById(post.id)
+            }
+
+            binding.post.share.setOnClickListener {
+                viewModel.shareById(post.id)
+            }
+
+            arguments?.textArg?.let { text ->
+                binding.post.content.text = text
+            } ?: run {
+                binding.post.content.text = post.content
+            }
+
+            //binding.post.content.text = post.content
+            binding.post.like.text = post.likedByMe.toString()
+            binding.post.author.text = post.author.toString()
+            binding.post.published.text = post.published.toString()
+            binding.post.share.text = post.shareById.toString()
+
+
+            //binding.post.video.setOnClickListener {}
+
+            binding.post.menu.setOnClickListener {
+                PopupMenu(requireContext(), it).apply {
+                    menuInflater.inflate(R.menu.options_post,this.menu)
+
+                    setOnMenuItemClickListener { item ->
+                        when (item.itemId) {
+                            R.id.remove -> {
+                                viewModel.removeById(post.id)
+                                true
+                            }
+
+                            R.id.edit -> {
+                                viewModel.edit(post)
+                                true
+                            }
+
+                            else -> false
                         }
-                        R.id.edit -> {
-                            binding.post.content.text = "edit"
-                            true
-                        }
-                        else -> false
                     }
-                }
-            }.show()
+                }.show()
+            }
         }
         return binding.root
     }
