@@ -38,7 +38,8 @@ class FeedFragment : Fragment() {
                 viewModel.edit(post)
                 findNavController().navigate(
                     R.id.action_feedFragment_to_editPostFragment2,
-                    bundleOf("textArg" to post.content)
+                    //bundleOf("postId" to post.id)
+                            bundleOf("textArg" to post.content)
                 )
             }
 
@@ -52,7 +53,8 @@ class FeedFragment : Fragment() {
 
             override fun onPostClick(post: Post) {
                 findNavController().navigate(
-                    R.id.action_feedFragment_to_post, bundleOf("textArg" to post.content)
+                    R.id.action_feedFragment_to_post, bundleOf("postId" to post.id)
+                    //R.id.action_feedFragment_to_post, bundleOf("textArg" to post.content)
                 )
             }
 

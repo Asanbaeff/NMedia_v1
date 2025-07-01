@@ -36,9 +36,18 @@
         android:id="@+id/editPostFragment"
         android:name="ru.netology.nmedia.activity.EditPostFragment"
         android:label="fragment_edit_post"
-        tools:layout="@layout/fragment_edit_post"/>
+        tools:layout="@layout/fragment_edit_post" />
+    <fragment
+        android:id="@+id/editPostFragment3"
+        android:name="ru.netology.nmedia.activity.EditPostFragment"
+        android:label="fragment_edit_post"
+        tools:layout="@layout/fragment_edit_post" />
     <fragment
         android:id="@+id/post"
         android:name="ru.netology.nmedia.activity.PostFragment"
-        tools:layout="@layout/fragment_single_post"/>
+        tools:layout="@layout/fragment_single_post" >
+        <action
+            android:id="@+id/action_post_to_editPostFragment32"
+            app:destination="@id/editPostFragment3" />
+    </fragment>
 </navigation>
